@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('home.index', []);
+// })->name('home.index');
+// IS EQUIVALENT TO:
+Route::view('/', 'home.index')->name('home.index');
+
+
+// Route::get('/contact', function () {
+//     return view('home.contact', []);
+// })->name('home.contact');
+// IS EQUIVALENT TO:
+Route::view('/contact', 'home.contact')->name('home.contact');
