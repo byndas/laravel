@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/posts/{id}', function ($id) {
+    return 'Blog post' . $id;
+});
+
+
 // Route::get('/', function () {
 //     return view('home.index', []);
 // })->name('home.index');
