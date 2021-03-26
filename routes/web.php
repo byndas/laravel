@@ -17,25 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/posts/{id}', function ($id) {
-    return 'Blog post' . $id;
+Route::get('/posts', function () use ($posts)) {
+    // compact($posts) === ['posts' => $posts]
+    return view('posts.index', ['posts' => $posts])
+}
+
+
+// anonymous function use ()
+Route::get('/posts/{id}', function ($id) use ($posts) {
+    // handy helper function
+    abort_if(!isset($posts[$id]), 404);
+
+    return view('posts.show', ['post' => $posts[$id]]);
 });
-
-
-// Route::get('/', function () {
-//     return view('home.index', []);
-// })->name('home.index');
-// IS EQUIVALENT TO:
-Route::view('/', 'home.index')->name('home.index');
-
-
-// Route::get('/contact', function () {
-//     return view('home.contact', []);
-// })->name('home.contact');
-// IS EQUIVALENT TO:
-Route::view('/contact', 'home.contact')->name('home.contact');
-
-Route::get('/single', AboutController::class);
 
 $posts = [
     1 => [
@@ -55,6 +49,22 @@ $posts = [
         'is_new' => false
     ]
 ];
+
+// Route::get('/', function () {
+//     return view('home.index', []);
+// })->name('home.index');
+// IS EQUIVALENT TO: static method
+Route::view('/', 'home.index')->name('home.index');
+
+
+// Route::get('/contact', function () {
+//     return view('home.contact', []);
+// })->name('home.contact');
+// IS EQUIVALENT TO: static method
+Route::view('/contact', 'home.contact')->name('home.contact');
+
+Route::get('/single', AboutController::class);
+
 
 Route::resource('posts', PostsController::class);
 // ->only(['index', 'show', 'create', 'store', 'edit', 'update']);
