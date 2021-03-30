@@ -30,6 +30,9 @@ Route::get('/', [HomeController::class, 'home'])->name('home.index');
 // IS EQUIVALENT TO: static method
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
+Route::get('/single', AboutController::class);
+)
+
 $posts = [
     1 => [
         'title' => 'Intro to Laravel',
