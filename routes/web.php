@@ -53,7 +53,10 @@ $posts = [
 ];
 
 Route::get('/posts', function () use ($posts) {
-    // compact($posts) === ['posts' => $posts]
+    // dd(request() -> all());
+    // dd((int)(request() -> query('page', 1));
+
+    // compact($posts) is the same as ['posts' => $posts]
     return view('posts.index', ['posts' => $posts]);
 });
 
@@ -95,11 +98,14 @@ Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
     return 'Posts from ' . $daysAgo . ' days ago';
 })->name('posts.recent.index')->middleware('auth');
 
+
 Route::prefix('/fun')->name('fun.')->group(function () use ($posts) {
+
     Route::get('responses', function () use ($posts) {
         return response($posts, 201)
             ->header('Content-Type', 'application/json')
-            ->cookie('MY_COOKIE', 'Piotr Jura', 3600);
+            // cookie expires after one hour
+            ->cookie('MY_COOKIE', 'Marc Byndas', 3600);
     })->name('responses');
 
     Route::get('redirect', function () {
@@ -114,14 +120,17 @@ Route::prefix('/fun')->name('fun.')->group(function () use ($posts) {
         return redirect()->route('posts.show', ['id' => 1]);
     })->name('named-route');
 
+    // directs user away from website
     Route::get('away', function () {
         return redirect()->away('https://google.com');
     })->name('away');
 
+    // returns response posts as json
     Route::get('json', function () use ($posts) {
         return response()->json($posts);
     })->name('json');
 
+    // downloads a response post
     Route::get('download', function () use ($posts) {
         return response()->download(public_path('/daniel.jpg'), 'face.jpg');
     })->name('download');
