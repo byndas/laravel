@@ -31,7 +31,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home.index');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
 Route::get('/single', AboutController::class);
-)
+
 
 $posts = [
     1 => [
@@ -52,27 +52,7 @@ $posts = [
     ]
 ];
 
-Route::get('/posts', function () use ($posts) {
-    // dd(request() -> all());
-    // dd((int)(request() -> query('page', 1));
-
-    // compact($posts) is the same as ['posts' => $posts]
-    return view('posts.index', ['posts' => $posts]);
-});
-
-
-// anonymous function use ()
-Route::get('/posts/{id}', function ($id) use ($posts) {
-    // handy helper function
-    abort_if(!isset($posts[$id]), 404);
-
-    return view('posts.show', ['post' => $posts[$id]]);
-});
-
-
-
 Route::get('/single', AboutController::class);
-
 
 Route::resource('posts', PostsController::class);
 // ->only(['index', 'show', 'create', 'store', 'edit', 'update']);
