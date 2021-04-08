@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
-    public function _invoke()
+    public function __invoke()
     {
         return 'Single';
     }
